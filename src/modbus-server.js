@@ -12,20 +12,27 @@ class ModbusServer extends EventEmitter {
     this._input = this._options.input || Buffer.alloc(1024)
   }
 
+  _getBuffer (bufferOrCallback) {
+    if (bufferOrCallback instanceof Buffer) {
+      return bufferOrCallback
+    }
+    return bufferOrCallback()
+  }
+
   get coils () {
-    return this._coils
+    return this._getBuffer(this._coils)
   }
 
   get discrete () {
-    return this._discrete
+    return this._getBuffer(this._discrete)
   }
 
   get holding () {
-    return this._holding
+    return this._getBuffer(this._holding)
   }
 
   get input () {
-    return this._input
+    return this._getBuffer(this._input)
   }
 }
 
